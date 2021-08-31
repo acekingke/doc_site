@@ -24,7 +24,7 @@ Watt【24】定义了$LA(q, A \to \omega)$ 为$\{t \in T| S \implies{^+} \alpha 
 
 ## 术语
 
-字典（vocabulary）是符号集合，V* 表示V中生成的所有符号串(string)（包含空串），V+表示$V^{*} - \{\epsilon\}$, $\epsilon$ 表示空串(empty string)。$\alpha$的长度用$|\alpha|$表示。
+字典（vocabulary）是符号集合，V* 表示V中生成的所有符号串(string)（包含空串），V+表示$V^* - \{\epsilon\}$ 其中$\epsilon$ 表示空串(empty string)。$\alpha$的长度用$|\alpha|$表示。
 
 非空字符串$\alpha$ 的第一个符号记作 First $\alpha$ , 其他的符号组成的串记作 Rest $\alpha$ , 最后一个符号记作 Last $\alpha$
 
@@ -36,7 +36,7 @@ $\cup \{S_1 \ldots S_n \}$其中$S_i$是集合，表示$S_1 \cup \cdots \cup S_n
 
 ### 2.1 CFG
 
-上下文无关文法CFG (context free grammar)是一个四元祖$G=<T, N, S, P>$ 其中T是终结符有限集合，N是非终结符有限集合，且$T \cap N = \empty$   ， $S \in N$ ， S为开始符号。 P 也是一个有限集合，是$ N \times V^*$的子集。其中$V=T \cup N$， 其中$(A, \omega )$ 是产生式，记作$A \rightarrow \omega$ , A 称为左部，$\omega$ 称为右部。此外，我们还要额外的产生式 $ S \rightarrow S^{'}\bot $ 新增非终结符${S^{'} \in N}$, 以及终结符${\bot \in T}$ , 并且S 与$\bot$ 不会再任何产生式右部出现（注:增广文法）。
+上下文无关文法CFG (context free grammar)是一个四元祖$G=<T, N, S, P>$ 其中T是终结符有限集合，N是非终结符有限集合，且$T \cap N = \empty$   ， $S \in N$ ， S为开始符号。 P 也是一个有限集合，是$N \times V^*$的子集。其中$V=T \cup N$， 其中$(A, \omega )$ 是产生式，记作$A \rightarrow \omega$ , A 称为左部，$\omega$ 称为右部。此外，我们还要额外的产生式 $ S \rightarrow S^{'}\bot $ 新增非终结符${S^{'} \in N}$, 以及终结符${\bot \in T}$ , 并且S 与$\bot$ 不会再任何产生式右部出现（注:增广文法）。
 
 本文常用惯例表示如下：
 
@@ -50,7 +50,7 @@ t,a, b, c... $\in$ T
 
 $\alpha,\beta, \gamma \in V^{*}$
 
-关系$\implies{_r}$ 读作“直接（右）生成”， 定义域为$V^{*}$ ,所以有$\alpha Ay \implies_{r} \alpha\omega y$ 其中 $\alpha \in V^{*}$, $y \in T^{*} $ 且$A \rightarrow \omega \in P$ 
+关系$\implies{_r}$ 读作“直接（右）生成”， 定义域为$V^{*}$ ,所以有$\alpha Ay \implies_{r} \alpha\omega y$ 其中 $\alpha \in V^{*}$, $y \in T^{*}$ 且$A \rightarrow \omega \in P$ 
 
 下表r在自此均丢弃，$\implies$ 默认是最右生成。而 $\implies^{*} 与 \implies^{+}$都读作“生成”（produce）
 
@@ -60,7 +60,7 @@ $\alpha,\beta, \gamma \in V^{*}$
 
 语言L(G) 表示由语法G生成的句子集合。即$\{x \in T ^{*}|S \implies^{+} x\}$ 这里假设所有的语法都可以被归约(reduce) 即所有$S \implies ^{+} \alpha A \beta$ 所有$A \in N$  都有 $A \implies ^{*} y$ , 而某些$\alpha , \beta \in V^{*}$ 且 $y \in T^{*}$
 
-设G是一个CFG，并且$k \geq 0 $, G 是一个LR(k),当且仅当  $S \implies^{*} \gamma \implies \alpha \omega y' $ 蕴含 $\forall \alpha, \gamma \in V^{*} $, 且$ y, y' \in T^{*}$ 均有 $First_k(y') = First_k(y)$ 其中$First_k(y)$ 表示y的长度为k的前缀，如果$|y| < k$ , 那么$First_k(y)$ 即y本身
+设G是一个CFG，并且$k \geq 0$, G 是一个LR(k),当且仅当  $S \implies^{*} \gamma \implies \alpha \omega y'$ 蕴含 $\forall \alpha, \gamma \in V^{*}$, 且$ y, y' \in T^{*}$ 均有 $First_k(y') = First_k(y)$ 其中$First_k(y)$ 表示y的长度为k的前缀，如果$|y| < k$ , 那么$First_k(y)$ 即y本身
 
 ### 2.2 LR解析器
 
@@ -86,9 +86,9 @@ $$
 $$
 q_0 \xrightarrow {X_1} q_1 - \cdots \xrightarrow {X_n} q_n
 $$
-我们说$ H\text{ spell } \alpha=X_1\dots X_n$ 并且定义$\text{ Spelling } H = \alpha $ 以及 $\text{ Top } H = q_n$ , H 记作$q_0 - \overset{\alpha}{\cdots} \rightarrow q_n$ , 读作" $q_0 \text{ goes to } q_n \text{under } \alpha$ " (q0在$\alpha$ 下跳到qn) ， 也可以记作 给定自动机或者状态图，H为$[q_0:\alpha]$ ， 如果$\text{ Top } [q:\alpha] = q'$ ,则 $[q:\alpha]$  与$[q':\alpha']$ 连接记作$[q: \alpha][q': \alpha']$ 并记作$[q:\alpha \alpha']$ 其中$[Start: \alpha]$ 可以简记为$[\alpha]$ ,      而[ ] 表示start状态
+我们说$H \text{ spell }\alpha=X_1\dots X_n$ 并且定义$\text{ Spelling } H = \alpha$ 以及 $\text{ Top } H = q_n$ , H 记作$q_0 - \overset{\alpha}{\cdots} \rightarrow q_n$ , 读作" $q_0 \text{ goes to } q_n \text{under } \alpha$ " (q0在$\alpha$ 下跳到qn) ， 也可以记作 给定自动机或者状态图，H为$[q_0:\alpha]$ ， 如果$\text{ Top } [q:\alpha] = q'$ ,则 $[q:\alpha]$  与$[q':\alpha']$ 连接记作$[q: \alpha][q': \alpha']$ 并记作$[q:\alpha \alpha']$ 其中$[Start: \alpha]$ 可以简记为$[\alpha]$ ,      而[ ] 表示start状态
 
-一个构型(configuration)是$K^+ \times T^+$ 的成员，第一部分称为状态栈（state stack）第二部分称为输入串（input），构型上的关系$\vdash$读作“直接移动到” （directly move to），包含$\vdash_{read}$ 和$\vdash_{A \rightarrow \omega} \forall A \rightarrow \omega \in P$ , $\vdash_{read}$ 读作“reads to”： 如果$\text{ Next } ( \text{ Top } [q : \alpha], t) $ 已经定义，则可以表示为 $ [q : \alpha]tz \vdash_{read} [q :\alpha t]z $ ,  而$\vdash_{A \rightarrow \omega} $读作 “reduce $ \omega $ to A in Moving to" (将 $\omega$归约到A， 并将状态移动到) ：当$A \rightarrow \omega \in \text{ Reduce }(\text{ Top } [q : \alpha \omega], t)$ $[q: \alpha \omega]tz \vdash_{A \rightarrow \omega} [q: \alpha A]tz$ (如果$[q: \alpha A]$ 是一个路径，但是在这里的LR自动机需要考虑额外的约束条件)  $\vdash^{*}$与$\vdash^{+}$读作“move to”(移动到) ，语言L(LRA(G)) 由LRA(G)解析，一定能识别L(G)语言，并且语言是$\{z \in T^* | [] z \vdash^+ [S'] \bot \}$
+一个构型(configuration)是$K^+ \times T^+$ 的成员，第一部分称为状态栈（state stack）第二部分称为输入串（input），构型上的关系$\vdash$读作“直接移动到” （directly move to），包含$\vdash_{read}$ 和$\vdash_{A \rightarrow \omega} \forall A \rightarrow \omega \in P$ , $\vdash_{read}$ 读作“reads to”： 如果${ Next } ( \text{ Top } [q : \alpha], t)$ 已经定义，则可以表示为 $[q : \alpha]tz \vdash_{read} [q :\alpha t]z$ ,  而$\vdash_{A \rightarrow \omega}$读作 “reduce $\omega$   to A in Moving to" (将 $\omega$ 归约到A， 并将状态移动到) ：当$A \rightarrow \omega \in \text{ Reduce }(\text{ Top } [q : \alpha \omega], t) 则 [q: \alpha \omega]tz \vdash_{A \rightarrow \omega} [q: \alpha A]tz$ (如果$[q: \alpha A]$ 是一个路径，但是在这里的LR自动机需要考虑额外的约束条件)  $\vdash^{*}$与$\vdash^{+}$读作“move to”(移动到) ，语言L(LRA(G)) 由LRA(G)解析，一定能识别L(G)语言，并且语言是$\{z \in T^* | [] z \vdash^+ [S'] \bot \}$
 
 > 注：这里的t是终结符，A是非终结符，z是终结符组成的串，而希腊字母表示是V* 中的串
 
@@ -136,4 +136,6 @@ $$
 ### 2.3 图
 
 一个有向图（directed graph 或称 digraph）是一个pair（V'，E）其中V' 是一个顶点集合，E是$V' \times V'$ 的子集，每个成员称为边（edge），在本文中V'始终是指有限集合。
+
+$\omega$
 
